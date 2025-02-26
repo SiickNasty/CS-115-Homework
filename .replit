@@ -1,4 +1,4 @@
-entrypoint = "Abrantes_HW6_Intro/testing.py"
+entrypoint = "Abrantes_HW7_Pygame.py"
 modules = ["python-3.11"]
 
 [nix]
@@ -11,5 +11,5 @@ language = "python3"
 requiredFiles = [".replit", "replit.nix"]
 
 [deployment]
-run = ["python3", "Abrantes_HW6_Intro/testing.py"]
+run = ["python3", "Abrantes_HW7_Pygame.py"]
 deploymentTarget = "cloudrun"
