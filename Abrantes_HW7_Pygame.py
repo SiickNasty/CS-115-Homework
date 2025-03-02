@@ -1,3 +1,9 @@
+"""
+      Nathan Abrantes
+      Homework 7
+      01 March 2025 
+"""
+
 import pygame
 
 # init pygame
@@ -8,10 +14,10 @@ width = 1000
 height = 850
 screen = pygame.display.set_mode((width,height))
 
-# set window title
-pygame.display.set_caption("Snake")
+# Set window title
+pygame.display.set_caption("Snek")
 
-# fps 
+# FPS 
 clock = pygame.time.Clock()
 dt = 0 
 speed = 10 
@@ -19,32 +25,47 @@ speed = 10
 """ Game loop """
 running = True 
 while running:
-  """Handle events"""
+  
+  """ Handle events """
   for event in pygame.event.get():
     if event.type == pygame.QUIT:
          running = False
 
-  """ Update our game state"""
+  """ Update game state"""
 
-  """ Draw our screen """
+  """ Draw screen """
   # Clear screen
   screen.fill("white")
 
-  # draw rectangle
-  pygame.draw.rect(
-    screen, 
-    "green", 
-    pygame.Rect((0,750), (1000, 100))
-  )
+  # Draw start area
+  pygame.draw.rect(screen, "purple", pygame.Rect((0,775), (1000,75)))
 
-  # draw circle
-  pygame.draw.circle(screen, "blue", (100,200), 40)
-  pygame.draw.circle(screen, "black", (200,200), 100)
+  # Draw win area before water section 
+  pygame.draw.rect(screen, "purple", pygame.Rect((0,375), (1000,75)))
 
-  # draw line
-  pygame.draw.line(screen, "red", (100,100), (200,200), 5)
+  # Draw water
+  pygame.draw.rect(screen, "blue", pygame.Rect((0,0), (1000,375)))
 
-  pygame.draw.ellipse(surface=screen, color="red", rect=pygame.Rect((100,100), (100,500)))
+  # Draw road
+  pygame.draw.rect(screen, "black", pygame.Rect((0,450), (1000,325)))
+  
+  # Draw frog
+  pygame.draw.circle(screen, "green", (500,812), 25)
+
+  # Draw square car
+  pygame.draw.rect(screen, "red", pygame.Rect((350,715), (50,50)))
+
+  # Draw lightning car
+  pygame.draw.polygon(screen, "violet", ((230,520), (230,560), (250,540), (260,570)))
+
+  # Draw triangle car
+  pygame.draw.polygon(screen, "cyan", ((100,600), (100,650), (200,625)))
+  
+  # Draw ellipse car
+  pygame.draw.ellipse(screen, "yellow", pygame.Rect((645,645), (80,50)))
+
+  # Draw semi truck
+  pygame.draw.rect(screen, "white", pygame.Rect((500,460), (120,50)))
 
   # Update screen
   pygame.display.flip()
@@ -52,5 +73,12 @@ while running:
   # FPS
   dt = clock.tick(speed)/1000
 
-# quit game
+# You win
+def game_over():
+  global game_over
+  display_game_over = game_over_font.render("You Win!", True, red, black)
+screen.blit(display_game_over, (70, 300))
+
+# End game
+game_over = True
 pygame.quit()  
