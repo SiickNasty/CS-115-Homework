@@ -6,13 +6,14 @@
 
 import pygame
 from pygame.constants import KEYDOWN
+from pygame.display import update
 
 # init pygame
 pygame.init()
 
 # window dimensions
 width = 1000
-height = 800
+height = 850
 screen = pygame.display.set_mode((width,height))
 
 # Set window title
@@ -27,13 +28,16 @@ speed = 10
 cur_pos = [500,812]
 direction = "up"
 
+# Cars coordinates
 lightning_car_coords = [[230,520], [230,560], [250,540], [260,570]]
 # for loop, update x pos for coordinate in lightning car coords
+
+Square_car_coords = [350,715]
 
 """ Game loop """
 running = True 
 while running:
-
+  
   """ Handle events """
   for event in pygame.event.get():
     if event.type == pygame.QUIT:
@@ -42,6 +46,7 @@ while running:
         if event.key == pygame.K_ESCAPE: # escape key
             running = False
 
+          # Movement of the frog, use WASD! 
         if event.key == pygame.K_w: # up direction (w)
               cur_pos[1] -= 20    #y-coor
         if event.key == pygame.K_s: # down direction (s)
@@ -50,6 +55,13 @@ while running:
               cur_pos[0] -= 20    # x-coor
         if event.key == pygame.K_d: # right direction (d)
               cur_pos[0] += 20    # x-coor
+
+        
+  if direction == "up":
+    lightning_car_coords[0][0] += 100
+
+  if direction == "up":
+    Square_car_coords[0] += 20
 
   """ Update game state"""
 
@@ -73,7 +85,7 @@ while running:
   screen.fill("white")
 
   # Draw start area
-  pygame.draw.rect(screen, "purple", pygame.Rect((0,600), (1000,75)))
+  pygame.draw.rect(screen, "purple", pygame.Rect((0,775), (1000,75)))
 
   # Draw win area before water section 
   pygame.draw.rect(screen, "purple", pygame.Rect((0,375), (1000,75)))
@@ -88,10 +100,12 @@ while running:
   pygame.draw.circle(screen, "green", cur_pos, 25)
 
   # Draw square car
-  pygame.draw.rect(screen, "red", pygame.Rect((350,715), (50,50)))
-
+  pygame.draw.rect(screen, "red", pygame.Rect(Square_car_coords[0], Square_car_coords[1], 50,50))
+  # pygame.draw.rect(screen, "red", pygame.Rect((350,715), (50,50)))
+  
   # Draw lightning car
-  pygame.draw.polygon(screen, "violet", ((230,520), (230,560), (250,540), (260,570)))
+  pygame.draw.polygon(screen, "violet", lightning_car_coords[0][0], lightning_car_coords[1][1])
+  # [[230,520], [230,560], [250,540], [260,570]]
 
   # Draw triangle car
   pygame.draw.polygon(screen, "cyan", ((100,600), (100,650), (200,625)))
@@ -108,13 +122,7 @@ while running:
   # FPS
   dt = clock.tick(speed)/1000
 
-# You win
-def game_over():
-  global game_over
-  display_game_over = game_over_font.render("You Win!", True, red, black)
-screen.blit(display_game_over, (70, 300))
-
 # End game
 game_over = True
-pygame.quit()  
+pygame.QUIT()  
 
