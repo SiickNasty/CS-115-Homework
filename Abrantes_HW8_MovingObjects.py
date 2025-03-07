@@ -29,10 +29,11 @@ cur_pos = [500,812]
 direction = "up"
 
 # Cars coordinates
-lightning_car_coords = [[230,520], [230,560], [250,540], [260,570]]
-# for loop, update x pos for coordinate in lightning car coords
-
+lightning_car_coords = [[225,520], [230,560], [250,540], [260,570]]
 Square_car_coords = [350,715]
+triangle_coords = [[100,590], [100,640], [200,615]]
+ellipse_coords = [655, 655]
+truck_coords = [[500,460], [120,50]]
 
 """ Game loop """
 running = True 
@@ -56,12 +57,40 @@ while running:
         if event.key == pygame.K_d: # right direction (d)
               cur_pos[0] += 20    # x-coor
 
-        
+  # automatic movement of cars
   if direction == "up":
-    lightning_car_coords[0][0] += 100
+    lightning_car_coords[0][0] -= 10
+    lightning_car_coords[1][0] -= 10
+    lightning_car_coords[2][0] -= 10
+    lightning_car_coords[3][0] -= 10
+    Square_car_coords[0] += 10
+    triangle_coords[0][0] += 10
+    triangle_coords[1][0] += 10
+    triangle_coords[2][0] += 10
+    ellipse_coords[0] -= 10
+    truck_coords[0][0] += 10
 
-  if direction == "up":
-    Square_car_coords[0] += 20
+  # cars bounce back to create the illusion that they go on forever
+  if ellipse_coords[0] < 0:
+    ellipse_coords[0] += 1000 
+
+  if lightning_car_coords[0][0] < 0:
+    lightning_car_coords[0][0] += 1000 
+    lightning_car_coords[1][0] += 1000
+    lightning_car_coords[2][0] += 1000
+    lightning_car_coords[3][0] += 1000
+
+  if Square_car_coords[0] > 1000:
+    Square_car_coords[0] = 0
+
+  if triangle_coords[0][0] > 1100:
+    triangle_coords[0][0] = 0 
+    triangle_coords[1][0] = 0
+    triangle_coords[2][0] = 100 
+
+  if truck_coords[0][0] > 1000:
+    truck_coords[0][0] = 0
+  
 
   """ Update game state"""
 
@@ -101,20 +130,18 @@ while running:
 
   # Draw square car
   pygame.draw.rect(screen, "red", pygame.Rect(Square_car_coords[0], Square_car_coords[1], 50,50))
-  # pygame.draw.rect(screen, "red", pygame.Rect((350,715), (50,50)))
   
   # Draw lightning car
-  pygame.draw.polygon(screen, "violet", lightning_car_coords[0][0], lightning_car_coords[1][1])
-  # [[230,520], [230,560], [250,540], [260,570]]
+  pygame.draw.polygon(screen, "violet", lightning_car_coords)
 
   # Draw triangle car
-  pygame.draw.polygon(screen, "cyan", ((100,600), (100,650), (200,625)))
+  pygame.draw.polygon(screen, "cyan", triangle_coords)
 
   # Draw ellipse car
-  pygame.draw.ellipse(screen, "yellow", pygame.Rect((645,645), (80,50)))
+  pygame.draw.ellipse(screen, "yellow", pygame.Rect(ellipse_coords, (80,50)))
 
   # Draw semi truck
-  pygame.draw.rect(screen, "white", pygame.Rect((500,460), (120,50)))
+  pygame.draw.rect(screen, "white", pygame.Rect(truck_coords[0], truck_coords[1]))
 
   # Update screen
   pygame.display.flip()
