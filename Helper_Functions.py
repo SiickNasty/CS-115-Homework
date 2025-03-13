@@ -16,5 +16,5 @@ def game_over():
   global screen
   global my_font
   global score
-  draw_text = (f"Game Over! Score: {score}", (350,375), "black", my_font, screen)
+  display_draw_text = (f"Game Over!", (350,375), "black", my_font, screen)
   
