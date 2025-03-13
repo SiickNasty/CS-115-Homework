@@ -1,12 +1,14 @@
 """
       Nathan Abrantes
-      Homework 8
-      03 March 2025 
+      Homework 9
+      12 March 2025
 """
 
 import pygame
 from pygame.constants import KEYDOWN
 from pygame.display import update
+import Helper_Functions # Imports functions from other file
+import time
 
 # init pygame
 pygame.init()
@@ -23,6 +25,24 @@ pygame.display.set_caption("Snek")
 clock = pygame.time.Clock()
 dt = 0 
 speed = 10 
+
+def lose_game():
+  screen.fill("black")
+  Helper_Functions.draw_text(f"You lost! Score: {score}", (435,400), "red", my_font, screen)
+  time.sleep(10)
+  running = False
+
+def win_game():
+  screen.fill("green")
+  Helper_Functions.draw_text(f"You won! Score: {score}", (435,400), "blue", my_font, screen)
+  time.sleep(10)
+  running = False
+
+# Create font
+system_fonts = pygame.font.get_fonts()
+print(system_fonts)
+my_font = pygame.font.SysFont(system_fonts[0], size=48, bold=True, italic=False)
+score = 0
 
 # Frog current position
 cur_pos = [500,812]
@@ -143,6 +163,12 @@ while running:
   # Draw semi truck
   pygame.draw.rect(screen, "white", pygame.Rect(truck_coords[0], truck_coords[1]))
 
+  Helper_Functions.draw_text(f"Score", (435,0), "white", my_font, screen)
+  Helper_Functions.draw_text(f"{score}", (480,40), "red", my_font, screen)     
+
+  if cur_pos[1] > 400:
+     win_game()
+     
   # Update screen
   pygame.display.flip()
   
@@ -150,6 +176,4 @@ while running:
   dt = clock.tick(speed)/1000
 
 # End game
-game_over = True
 pygame.QUIT()  
-
