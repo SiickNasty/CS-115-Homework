@@ -6,10 +6,15 @@ def draw_text(text, coordinate, text_color, my_font, screen):
   coordinate: holds our coordiante values
   text_color: holds the color of text, string of list
   """
-  
-  # global my_font # defined outside of function that can be used inside of function
-  # global screen
+
   text_image = my_font.render(text, True, text_color)
   text_rect = text_image.get_rect()
   text_rect.topleft = coordinate
   screen.blit(text_image, text_rect)
+
+def game_over():
+  global screen
+  global my_font
+  global score
+  draw_text = (f"Game Over! Score: {score}", (350,375), "black", my_font, screen)
+  

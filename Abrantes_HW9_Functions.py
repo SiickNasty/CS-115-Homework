@@ -26,18 +26,6 @@ clock = pygame.time.Clock()
 dt = 0 
 speed = 10 
 
-def lose_game():
-  screen.fill("black")
-  Helper_Functions.draw_text(f"You lost! Score: {score}", (435,400), "red", my_font, screen)
-  time.sleep(10)
-  running = False
-
-def win_game():
-  screen.fill("green")
-  Helper_Functions.draw_text(f"You won! Score: {score}", (435,400), "blue", my_font, screen)
-  time.sleep(10)
-  running = False
-
 # Create font
 system_fonts = pygame.font.get_fonts()
 print(system_fonts)
@@ -45,7 +33,7 @@ my_font = pygame.font.SysFont(system_fonts[0], size=48, bold=True, italic=False)
 score = 0
 
 # Frog current position
-cur_pos = [500,812]
+cur_pos = [485,790]
 direction = "up"
 
 # Cars coordinates
@@ -110,24 +98,26 @@ while running:
 
   if truck_coords[0][0] > 1000:
     truck_coords[0][0] = 0
-  
 
   """ Update game state"""
 
   # boundaries of screen
   if cur_pos[0] < 0: # x-direction boundaries
     cur_pos[0] = 0 
-    # running = False
+
   if cur_pos[0] > width-20:  
     cur_pos[0] = width-20
-    # running = False
 
   if cur_pos[1] < 0: # y-direction boundaries
     cur_pos[1] = 0
-    # running = False
+
   if cur_pos[1] > height-20:
     cur_pos[1] = height-20
-    # running = False
+
+  # Identifying the shapes/cars
+  square_car = pygame.Rect(Square_car_coords[0], Square_car_coords[1], 50,50)
+  frog = pygame.Rect(cur_pos[0], cur_pos[1], 50, 50)
+  semi_truck = pygame.Rect(truck_coords[0], truck_coords[1])
 
   """ Draw screen """
   # Clear screen
@@ -146,11 +136,11 @@ while running:
   pygame.draw.rect(screen, "black", pygame.Rect((0,450), (1000,325)))
 
   # Draw frog
-  pygame.draw.circle(screen, "green", cur_pos, 25)
+  pygame.draw.rect(screen, "green", frog)
 
   # Draw square car
-  pygame.draw.rect(screen, "red", pygame.Rect(Square_car_coords[0], Square_car_coords[1], 50,50))
-  
+  pygame.draw.rect(screen, "red", square_car)
+
   # Draw lightning car
   pygame.draw.polygon(screen, "violet", lightning_car_coords)
 
@@ -161,13 +151,26 @@ while running:
   pygame.draw.ellipse(screen, "yellow", pygame.Rect(ellipse_coords, (80,50)))
 
   # Draw semi truck
-  pygame.draw.rect(screen, "white", pygame.Rect(truck_coords[0], truck_coords[1]))
+  pygame.draw.rect(screen, "white", semi_truck)
+
+  # Collision between frog and square car
+  if square_car.colliderect(frog):
+     Helper_Functions.draw_text(f"You Lose! Score: {score}", (350,375), "white", my_font, screen)
+
+  if semi_truck.colliderect(frog):
+     Helper_Functions.draw_text(f"You Lose! Score: {score}", (350,375), "white", my_font, screen)
 
   Helper_Functions.draw_text(f"Score", (435,0), "white", my_font, screen)
   Helper_Functions.draw_text(f"{score}", (480,40), "red", my_font, screen)     
 
-  if cur_pos[1] > 400:
-     win_game()
+  if cur_pos[1] < 400:  
+     screen.fill("green")
+     score += 1
+     Helper_Functions.draw_text(f"You win! Score: {score}", (350,375), "blue", my_font, screen)
+
+  if cur_pos[1] < 400:
+     time.sleep(3)
+     cur_pos = [485,790]
      
   # Update screen
   pygame.display.flip()
@@ -176,4 +179,4 @@ while running:
   dt = clock.tick(speed)/1000
 
 # End game
-pygame.QUIT()  
+pygame.QUIT()
