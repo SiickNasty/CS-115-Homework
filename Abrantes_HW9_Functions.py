@@ -79,40 +79,40 @@ while running:
     truck_coords[0][0] += 10
 
   # cars bounce back to create the illusion that they go on forever
-  if ellipse_coords[0] < 0:
-    ellipse_coords[0] += 1000 
+  if ellipse_coords[0] < -50:
+    ellipse_coords[0] += 1050 
 
-  if lightning_car_coords[0][0] < 0:
-    lightning_car_coords[0][0] += 1000 
-    lightning_car_coords[1][0] += 1000
-    lightning_car_coords[2][0] += 1000
-    lightning_car_coords[3][0] += 1000
+  if lightning_car_coords[0][0] < -35:
+    lightning_car_coords[0][0] += 1035 
+    lightning_car_coords[1][0] += 1035 
+    lightning_car_coords[2][0] += 1035 
+    lightning_car_coords[3][0] += 1035 
 
   if Square_car_coords[0] > 1000:
-    Square_car_coords[0] = 0
+    Square_car_coords[0] = -50
 
-  if triangle_coords[0][0] > 1100:
-    triangle_coords[0][0] = 0 
-    triangle_coords[1][0] = 0
-    triangle_coords[2][0] = 100 
+  if triangle_coords[0][0] > 1000:
+    triangle_coords[0][0] = -100  
+    triangle_coords[1][0] = -100
+    triangle_coords[2][0] = 0
 
   if truck_coords[0][0] > 1000:
-    truck_coords[0][0] = 0
+    truck_coords[0][0] = -120
 
   """ Update game state"""
 
   # boundaries of screen
   if cur_pos[0] < 0: # x-direction boundaries
-    cur_pos[0] = 0 
+    cur_pos[0] = 0
 
-  if cur_pos[0] > width-20:  
-    cur_pos[0] = width-20
+  if cur_pos[0] > width-50:  
+    cur_pos[0] = width-50
 
   if cur_pos[1] < 0: # y-direction boundaries
     cur_pos[1] = 0
 
-  if cur_pos[1] > height-20:
-    cur_pos[1] = height-20
+  if cur_pos[1] > height-50:
+    cur_pos[1] = height-50
 
   # Identifying the shapes/cars
   square_car = pygame.Rect(Square_car_coords[0], Square_car_coords[1], 50,50)
@@ -160,6 +160,7 @@ while running:
   if semi_truck.colliderect(frog):
      Helper_Functions.draw_text(f"You Lose! Score: {score}", (350,375), "white", my_font, screen)
 
+  # Draw score
   Helper_Functions.draw_text(f"Score", (435,0), "white", my_font, screen)
   Helper_Functions.draw_text(f"{score}", (480,40), "red", my_font, screen)     
 
@@ -179,4 +180,4 @@ while running:
   dt = clock.tick(speed)/1000
 
 # End game
-pygame.QUIT()
+pygame.quit()
