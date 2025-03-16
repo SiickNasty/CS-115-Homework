@@ -155,24 +155,26 @@ while running:
 
   # Collision between frog and square car
   if square_car.colliderect(frog):
+     screen.fill("red")
      Helper_Functions.draw_text(f"You Lose! Score: {score}", (350,375), "white", my_font, screen)
+     running = False
+
 
   if semi_truck.colliderect(frog):
+     screen.fill("red")
      Helper_Functions.draw_text(f"You Lose! Score: {score}", (350,375), "white", my_font, screen)
+     running = False # cannot figure out how to get game to pause on the win/lose screen. 
 
   # Draw score
   Helper_Functions.draw_text(f"Score", (435,0), "white", my_font, screen)
   Helper_Functions.draw_text(f"{score}", (480,40), "red", my_font, screen)     
 
+  # Win condition - Getting across road
   if cur_pos[1] < 400:  
-     screen.fill("green")
-     score += 1
-     Helper_Functions.draw_text(f"You win! Score: {score}", (350,375), "blue", my_font, screen)
+     score += 1 
+     Helper_Functions.draw_text(f"You Win! Score: {score}", (350,375), "blue", my_font, screen)
+     running = False
 
-  if cur_pos[1] < 400:
-     time.sleep(3)
-     cur_pos = [485,790]
-     
   # Update screen
   pygame.display.flip()
   

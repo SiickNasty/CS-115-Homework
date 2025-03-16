@@ -1,3 +1,20 @@
+"""
+    Nathan Abrantes 
+    Homework 9
+    12 March 2025
+"""
+
+import pygame
+width = 1000
+height = 850
+screen = pygame.display.set_mode((width, height))
+cur_posx = 485
+cur_posy = 790
+score = 0 
+lightning_car_coords = [[225,520], [230,560], [250,540], [260,570]]
+lightning = pygame.draw.polygon(screen, "violet", lightning_car_coords)
+frog = pygame.draw.rect(screen, "green", pygame.Rect(cur_posx, cur_posy, 50, 50))
+
 def draw_text(text, coordinate, text_color, my_font, screen):
   
   """
@@ -12,9 +29,15 @@ def draw_text(text, coordinate, text_color, my_font, screen):
   text_rect.topleft = coordinate
   screen.blit(text_image, text_rect)
 
-def game_over():
-  global screen
-  global my_font
-  global score
-  display_draw_text = (f"Game Over!", (350,375), "black", my_font, screen)
-  
+
+def collision(frogx, frogy, lightningx, lightningy):
+  if abs(frogx - lightningx) < 45 and abs(frogy - lightningy) < 55:
+    global cur_posx
+    global cur_posy
+    global lightning_car_coords
+    cur_pos = 0 
+    lightning_car_coords = 0
+
+
+collision(frog.centerx, frog.centery, lightning.centerx, lightning.centery)  
+        
