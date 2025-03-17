@@ -159,7 +159,7 @@ while running:
      Helper_Functions.draw_text(f"You Lose! Score: {score}", (350,375), "white", my_font, screen)
      running = False
 
-
+  # Collision between frog and semi truck
   if semi_truck.colliderect(frog):
      screen.fill("red")
      Helper_Functions.draw_text(f"You Lose! Score: {score}", (350,375), "white", my_font, screen)
